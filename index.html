@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head> 
+<body>
+    <div class="player1">
+
+        <button id="iniciar1" onclick="iniciar_Contagem1()"><i class="fa-regular fa-circle-play"></i></button>
+        <button id="parar1" style="display: none;"><i class="fa-solid fa-circle-stop"></i></button>
+
+    </div>
+  
+    <div id="display">0 : 0</div>
+
+    <div class="player2">
+
+        <button id="iniciar2" onclick="iniciar_Contagem2()"><i class="fa-regular fa-circle-play"></i></button>
+        <button id="parar2" style="display: none;"><i class="fa-solid fa-circle-stop"></i></button>
+
+    </div>
+</body>
+    <script>
+        var iniciar1;
+        var iniciar2;
+        var contMilissegundos;
+        var contSegundos;
+        const btnIniciar1 = document.getElementById("iniciar1");
+        const btnIniciar2 = document.getElementById("iniciar2");
+        const btnParar1 = document.getElementById("parar1");
+        const btnParar2 = document.getElementById("parar2");
+    
+        // INÍCIO CONTAGEM JOGADOR 1
+
+        function iniciar_Contagem1(){
+
+            btnIniciar1.style = "display: none;"
+            btnParar1.style = "display: block;"
+            btnIniciar2.disabled = true; 
+
+            contMilissegundos = 1;
+            contSegundos = 0;
+
+            iniciar1 = setInterval(()=>{
+                contMilissegundos++
+
+                if(contMilissegundos == 59){
+                    contMilissegundos = 0;
+                    contar_Minutos1();
+                }
+
+                document.getElementById("display").innerHTML = `${contSegundos} : ${contMilissegundos}`;
+
+            }, 16);
+        }
+
+        function contar_Minutos1(){
+
+            setTimeout(()=>{
+                contSegundos++
+                if(contSegundos > 9){
+
+                    btnIniciar1.style = "display: block;"
+                    btnParar1.style = "display: none;"
+
+                    parar_Contagem(this.iniciar1);
+                    btnIniciar2.disabled = false; 
+                }
+            }, 0)
+
+        }
+
+        btnParar1.addEventListener("click", ()=>{
+
+            btnIniciar1.style = "display: block;"
+            btnParar1.style = "display: none;"
+
+            parar_Contagem(this.iniciar1);
+            btnIniciar2.disabled = false; 
+         
+        })
+
+
+        // INÍCIO CONTAGEM JOGADOR 2
+
+        function iniciar_Contagem2(){
+
+            btnIniciar2.style = "display: none;"
+            btnParar2.style = "display: block;"
+            btnIniciar1.disabled = true; 
+
+            contMilissegundos = 1;
+            contSegundos = 0;
+            
+            iniciar2 = setInterval(()=>{
+                contMilissegundos++
+
+                if(contMilissegundos == 59){
+                    contMilissegundos = 0;
+                    contar_Minutos2();
+                }
+
+                document.getElementById("display").innerHTML = `${contSegundos} : ${contMilissegundos}`;
+
+            }, 16);
+        }
+
+        function contar_Minutos2(){
+
+            setTimeout(()=>{
+                contSegundos++
+                if(contSegundos > 9){
+
+                    btnIniciar2.style = "display: block;"
+                    btnParar2.style = "display: none;"
+
+                    parar_Contagem(this.iniciar2);
+                    btnIniciar1.disabled = false; 
+                }
+            }, 0)
+
+        }
+
+        btnParar2.addEventListener("click", ()=>{
+
+            btnIniciar2.style = "display: block;"
+            btnParar2.style = "display: none;"
+
+            parar_Contagem(this.iniciar2);
+            btnIniciar1.disabled = false; 
+            
+        })
+
+        // FUNCÃO PARAR INTERROMPER O TIMER
+
+        function parar_Contagem(intervalo){
+
+            clearInterval(intervalo);
+
+            document.getElementById("display").innerHTML = `${contSegundos} : ${contMilissegundos}`;
+                
+        }
+
+    </script>
+</html>
