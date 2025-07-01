@@ -27,7 +27,7 @@
     </div>
   
     <div id="display">    
-        <button onclick="definir_Tempo()">
+        <button onclick="abrir_BoxTimer()">
     <i class="fa-solid fa-ellipsis-vertical"></i></button>
     0 : 0</div>
 
@@ -48,12 +48,25 @@
         const btnParar1 = document.getElementById("parar1");
         const btnParar2 = document.getElementById("parar2");
         var timer;
-        var boxTimer= document.getElementById("boxTimer");
+        var boxTimer = document.getElementById("boxTimer");
+
+        function atualizarDisplay(){
+            document.getElementById("display").innerHTML = `<button onclick="abrir_BoxTimer()">
+            <i class="fa-solid fa-ellipsis-vertical"></i></button> ${contSegundos} : ${contMilissegundos}`
+        }
+
+        //ABRIR DEFINIÇÃO DE TIMER
+        function abrir_BoxTimer(){
+            document.getElementById("display").innerHTML = `<button onclick= "abrir_BoxTimer()">
+            <i class="fa-solid fa-ellipsis-vertical"></i></button> 0 : 0`
+            parar_Contagem(this.iniciar1);
+            parar_Contagem(this.iniciar2);
+            boxTimer.style = "display: flex;"
+        }
 
         // DFINE POR QUANTO TEMPO O CRONÔMETRO VAI RODAR
         function definir_Tempo(){
             timer = document.getElementById("timer")
-            boxTimer.style = "display: flex;"
 
             console.log("entrou")
             if(timer.value > 0){
@@ -83,8 +96,7 @@
                     contar_Minutos1();
                 }
 
-                document.getElementById("display").innerHTML = `${contSegundos} : ${contMilissegundos}`;
-
+               atualizarDisplay();
             }, 16);
         }
 
@@ -92,7 +104,7 @@
 
             setTimeout(()=>{
                 contSegundos++
-                if(contSegundos > timer){
+                if(contSegundos == timer.value){
 
                     btnIniciar1.style = "display: block;"
                     btnParar1.style = "display: none;"
@@ -134,7 +146,7 @@
                     contar_Minutos2();
                 }
 
-                document.getElementById("display").innerHTML = `${contSegundos} : ${contMilissegundos}`;
+               atualizarDisplay();
 
             }, 16);
         }
@@ -143,7 +155,7 @@
 
             setTimeout(()=>{
                 contSegundos++
-                if(contSegundos > timer){
+                if(contSegundos == timer.value){
 
                     btnIniciar2.style = "display: block;"
                     btnParar2.style = "display: none;"
@@ -171,7 +183,7 @@
 
             clearInterval(intervalo);
 
-            document.getElementById("display").innerHTML = `${contSegundos} : ${contMilissegundos}`;
+            atualizarDisplay();
                 
         }
 
