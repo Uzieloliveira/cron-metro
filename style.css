@@ -6,17 +6,72 @@
 
 body{
     height: 100%;
-    background-color: aqua;
 }
 
 div button i{
     font-size: 5rem;
 }
 
-button{
+.player1 button, .player2 button{
     height: 100%;
     width: 100%;
     border-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#boxTimer{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: rgb(103, 192, 192);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.escolherTime{
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgb(51, 64, 247);
+}
+
+.escolherTime button{
+    padding: 10px;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    border-style: none;
+    text-transform: capitalize;  
+    background-color: rgb(237, 240, 240);
+    color: rgb(6, 44, 78);
+    font-weight: 600;
+    transition: all .2s;
+    cursor: pointer;
+}
+
+.escolherTime button:hover{
+    background-color: rgb(103, 192, 192);
+    color: aliceblue;
+}
+
+.escolherTime input{
+    padding: 10px;
+    text-align: center;  
+    border-radius: 10px;
+    border-style: none;
+}
+
+.escolherTime label{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    color: aliceblue;
 }
 
 #iniciar1, #iniciar2{
@@ -24,24 +79,37 @@ button{
 }
 
 #parar1, #parar2{
-    
     background-color: rgb(211, 55, 55);
 }
 
 .player1, .player2{
     height: 50vh;
+    border: solid 0.5px #000000;
 }
 
 #display{
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: solid 1px;
     height: 100px;
+    width: 80%;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 5rem;
-    background-color: white;
-    border: solid 1px;
+    background-color: aliceblue;
+    font-size: 3rem;
+    box-shadow: 2px 2px 20px #000a06;
+}
+
+#display button{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border-style: none;
+}
+
+#display button i{
+    font-size: 1.8rem;
 }

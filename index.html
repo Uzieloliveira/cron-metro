@@ -8,6 +8,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head> 
 <body>
+
+    <div id="boxTimer">
+
+        <div class="escolherTime">
+            <label for="">Defina o tempo de execução!</label>
+            <input type="number" id="timer">
+            <button onclick="definir_Tempo()" class="time">definir</button>
+        </div>
+
+    </div>
+
     <div class="player1">
 
         <button id="iniciar1" onclick="iniciar_Contagem1()"><i class="fa-regular fa-circle-play"></i></button>
@@ -15,7 +26,10 @@
 
     </div>
   
-    <div id="display">0 : 0</div>
+    <div id="display">    
+        <button onclick="definir_Tempo()">
+    <i class="fa-solid fa-ellipsis-vertical"></i></button>
+    0 : 0</div>
 
     <div class="player2">
 
@@ -33,7 +47,23 @@
         const btnIniciar2 = document.getElementById("iniciar2");
         const btnParar1 = document.getElementById("parar1");
         const btnParar2 = document.getElementById("parar2");
-    
+        var timer;
+        var boxTimer= document.getElementById("boxTimer");
+
+        // DFINE POR QUANTO TEMPO O CRONÔMETRO VAI RODAR
+        function definir_Tempo(){
+            timer = document.getElementById("timer")
+            boxTimer.style = "display: flex;"
+
+            console.log("entrou")
+            if(timer.value > 0){
+                boxTimer.style = "display: none;"
+            }else{
+                alert("Informe um valor maior doque 0")
+            }
+          
+        }
+
         // INÍCIO CONTAGEM JOGADOR 1
 
         function iniciar_Contagem1(){
@@ -62,7 +92,7 @@
 
             setTimeout(()=>{
                 contSegundos++
-                if(contSegundos > 9){
+                if(contSegundos > timer){
 
                     btnIniciar1.style = "display: block;"
                     btnParar1.style = "display: none;"
@@ -113,7 +143,7 @@
 
             setTimeout(()=>{
                 contSegundos++
-                if(contSegundos > 9){
+                if(contSegundos > timer){
 
                     btnIniciar2.style = "display: block;"
                     btnParar2.style = "display: none;"
