@@ -25,22 +25,35 @@ div button i{
     height: 100%;
     width: 100%;
     position: absolute;
-    background-color: rgb(103, 192, 192);
+    background-color: rgba(6, 80, 49, 0.89);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1;
 }
 
+.boxTime{
+    display: flex;
+    width: 120px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.boxTime input{
+    width: 50%;
+}
+
 .escolherTime{
-    height: 25%;
+    height: 35%;
     display: flex;
     align-items: center;
     justify-content: space-around;
     flex-direction: column;
     padding: 10px;
     border-radius: 10px;
-    background-color: rgb(51, 64, 247);
+    background-color: rgb(3, 116, 22);
 }
 
 .escolherTime button{
@@ -50,7 +63,7 @@ div button i{
     border-style: none;
     text-transform: capitalize;  
     background-color: rgb(237, 240, 240);
-    color: rgb(6, 44, 78);
+    color: rgb(8, 78, 6);
     font-weight: 600;
     transition: all .2s;
     cursor: pointer;
@@ -68,11 +81,17 @@ div button i{
     border-style: none;
 }
 
+.escolherTime label:nth-child(1){
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+}
+
 .escolherTime label{
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 600;
-    color: aliceblue;
+    color: rgb(6, 19, 11);
 }
+
 
 #iniciar1, #iniciar2{
     background-color: rgb(65, 243, 65);
@@ -112,4 +131,38 @@ div button i{
 
 #display button i{
     font-size: 1.8rem;
+}
+
+/* TELA DE FIM DE TEMPO */
+#endTime-screen{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #c91a1a;
+    z-index: 2;
+    top: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#endTime-screen p{
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: 2rem;
+   color: aliceblue;
+}
+
+#endTime-screen button{
+   padding: 10px;
+   font-size: 2rem;
+   border-radius: 50px;
+   height: 100px;
+   width: 100px;
+   border-style: none;
+   background-color: rgb(247, 222, 0);
+   border: solid 2px;
+   color: black;
+   text-transform: capitalize;
+   margin-top: 20px;
 }
