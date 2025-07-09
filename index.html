@@ -6,6 +6,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Playwrite+RO:wght@100..400&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 </head> 
 <body>
 
@@ -16,18 +19,24 @@
             <label for="">Defina o tempo de execução!</label>
                
             <label for="jogos">escolha um tipo de jogo</label>
-             <input type="text" list="jogos">
-            <datalist id="jogos">
-                <option value="Xadres">
-                <option value="Cartas">
-            </datalist>
+
+            <div id="boxRadio">
+
+                <label for="xadres">Xadres</label>
+                <input type="radio" id="xadres" name="radio" onfocus="bloquearInput()">
+
+                <label for="cartas">Cartas</label>
+                <input type="radio" id="cartas" name="radio" onfocus="desbloquearInput()">
+
+            </div>
+                
             
             <label for="jogos">definir tempo</label>
 
             <div class="boxTime">
                 
                 <i class="fa-regular fa-clock"></i>
-                <input type="number" id="minutos" placeholder="min"/><p>:</p><input type="number" id="segundos" placeholder="seg">
+                <input type="number" id="minutos" placeholder="min" disabled /><p>:</p><input type="number" id="segundos" placeholder="seg" disabled/>
 
             </div>
          
@@ -49,10 +58,19 @@
 
         <i class="fa-solid fa-ellipsis-vertical"></i></button>
         
-        <div id="displayMin">00</div><p>:</p>
+        <div id="detalhes">
+            <p>tempo selecionado: </p>
+
+            <p>tipo de jogo: </p>
+        </div>    
+
+        <div id="cronometro">
+            <div id="displayMin">00</div><p>:</p>
             <div id="displaySeg">00</div><p>:</p>
             <div id="displayMil">00</div>
         </div>
+            
+    </div>
 
     <div class="player2">
         
@@ -87,17 +105,65 @@
         var boxTimer = document.getElementById("boxTimer");
         var endTime_screen = document.getElementById("endTime-screen");
 
+        function bloquearInput(){
+            document.getElementById("minutos").disabled = true
+            document.getElementById("segundos").disabled = true
+        }
+
+         function desbloquearInput(){
+            document.getElementById("minutos").disabled = false
+            document.getElementById("segundos").disabled = false
+        }
+
         function atualizarDisplay(){
+
+            var concatSegundos;
+            var concatMilissegundos;
+            var concatMinutos;
+
+            if(contSegundos < 10){
+                 var concatSegundos = "0" + contSegundos;
+            }else{
+                 var concatSegundos = contSegundos;
+            }
+
+            if(contMilissegundos < 10){
+                 var concatMilissegundos = "0" + contMilissegundos;
+            }else{
+                 var concatMilissegundos = contMilissegundos;
+            }
+            
+            if(contMinutos < 10){
+                 var concatMinutos = "0" + contMinutos;
+            }else{
+                 var concatMinutos = contMinutos;
+            }
+               
+
             document.getElementById("display").innerHTML = `<button onclick="abrir_BoxTimer()">
-            <i class="fa-solid fa-ellipsis-vertical"></i></button>  <div id="displayMin">${contMinutos}</div><p>:</p>
-            <div id="displaySeg">${contSegundos}</div><p>:</p>
-            <div id="displayMil">${contMilissegundos}</div>
-             </div>`
+            <i class="fa-solid fa-ellipsis-vertical"></i></button> 
+
+            <div id="detalhes">
+                <p>tempo selecionado: </p>
+
+                <p>tipo de jogo: </p>
+            </div>  
+              
+            <div id="cronometro">
+                <div id="displayMin">${concatMinutos}</div><p>:</p>
+                <div id="displaySeg">${concatSegundos}</div><p>:</p>
+                <div id="displayMil">${concatMilissegundos}</div>
+                </div>
+            </div>`
 
              if(contMinutos == minutos && contSegundos == segundos){
                 contSegundos = 0;
                 contMinutos = 0;
-                endTime_screen.style = "display: flex;"
+
+                setTimeout(() => {
+                   endTime_screen.style = "display: flex;"
+                }, 1000);
+                
             }
              
         }
@@ -117,6 +183,9 @@
         }
 
         // DFINE POR QUANTO TEMPO O CRONÔMETRO VAI RODAR
+
+        
+
         function definir_Tempo(){
             minutos = document.getElementById("minutos").value
             segundos = document.getElementById("segundos").value
@@ -158,7 +227,7 @@
             setTimeout(()=>{
                 contSegundos++
 
-                if(segundos > 0 && segundos < 10 && contMinutos == minutos){
+                if(segundos > 0 && segundos < 15 && contMinutos == minutos){
                     if(contSegundos == segundos){
                         btnIniciar1.style = "display: block;"
                         btnParar1.style = "display: none;"
@@ -167,7 +236,7 @@
                     }
                 }else{
                     if(minutos > 0){
-                        if(contSegundos == 10){
+                        if(contSegundos == 15){
                             contar_Minutos1();
                             contSegundos = "0";
                             contMilissegundos = "0"
@@ -233,45 +302,89 @@
 
             contMilissegundos = 1;
             contSegundos = 0;
-            
+            contMinutos = 0;
+
             iniciar2 = setInterval(()=>{
                 contMilissegundos++
 
                 if(contMilissegundos == 59){
                     contMilissegundos = 0;
-                    contar_Minutos2();
+                    contar_Segundos2();
                 }
-
                atualizarDisplay();
-
             }, 16);
         }
+
 
         function contar_Segundos2(){
 
             setTimeout(()=>{
                 contSegundos++
-                if(contSegundos == segundos){
 
-                    btnIniciar2.style = "display: block;"
-                    btnParar2.style = "display: none;"
+                if(segundos > 0 && segundos < 10 && contMinutos == minutos){
+                    if(contSegundos == segundos){
+                        btnIniciar2.style = "display: block;"
+                        btnParar2.style = "display: none;"
+                        parar_Contagem(this.iniciar2);
+                        btnIniciar1.disabled = false; 
+                    }
+                }else{
+                    if(minutos > 0){
+                        if(contSegundos == 10){
+                            contar_Minutos2();
+                            contSegundos = "0";
+                            contMilissegundos = "0"
+                        }
+                    }
+                    else{
+                        if(contSegundos == segundos){
 
-                    parar_Contagem(this.iniciar2);
-                    btnIniciar1.disabled = false; 
+                            btnIniciar2.style = "display: block;"
+                            btnParar2.style = "display: none;"
+
+                            parar_Contagem(this.iniciar2);
+                            btnIniciar1.disabled = false; 
+                         
+                        }
+                    }
+                
+                }
+                
+            }, 0)
+
+        }
+
+         function contar_Minutos2(){
+
+            setTimeout(()=>{
+                contMinutos++
+
+                if(contMinutos == minutos){
+                    if(segundos > 0 && segundos < 10){
+                        contar_Segundos2();
+                    }else{
+                        btnIniciar2.style = "display: block;"
+                        btnParar2.style = "display: none;"
+
+                        parar_Contagem(this.iniciar2);
+                        btnIniciar1.disabled = false; 
+                    }
+                    
                 }
             }, 0)
 
         }
 
-        btnParar2.addEventListener("click", ()=>{
+         btnParar2.addEventListener("click", ()=>{
 
             btnIniciar2.style = "display: block;"
             btnParar2.style = "display: none;"
 
             parar_Contagem(this.iniciar2);
             btnIniciar1.disabled = false; 
-            
+         
         })
+
 
         // FUNCÃO PARAR INTERROMPER O TIMER
 
@@ -281,6 +394,7 @@
 
             atualizarDisplay();
         }
+
         function voltar(){
             endTime_screen.style = "display: none;"
         }
