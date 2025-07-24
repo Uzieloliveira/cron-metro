@@ -34,9 +34,9 @@
             <label for="jogos">definir tempo</label>
 
             <div class="boxTime">
-                
+            
                 <i class="fa-regular fa-clock"></i>
-                <input type="number" id="minutos" placeholder="min" disabled /><p>:</p><input type="number" id="segundos" placeholder="seg" disabled/>
+                <input type="number" id="minutos" placeholder="min" disabled required/><p>:</p><input type="number" id="segundos" placeholder="seg" disabled required/>
 
             </div>
          
@@ -52,18 +52,16 @@
 
     </div>
   
-    <div id="display">    
-
-        <button onclick="abrir_BoxTimer()">
-
-        <i class="fa-solid fa-ellipsis-vertical"></i></button>
-        
+    <div id="display">  
         <div id="detalhes">
-            <p>tempo selecionado: </p>
+            <p>tempo selecionado: ?</p>
 
-            <p>tipo de jogo: </p>
+            <p>tipo de jogo: ?</p>
         </div>    
 
+        <button onclick="abrir_BoxTimer()">
+        <i class="fa-solid fa-ellipsis-vertical"></i></button>
+        
         <div id="cronometro">
             <div id="displayMin">00</div><p>:</p>
             <div id="displaySeg">00</div><p>:</p>
@@ -93,9 +91,9 @@
     <script>
         var iniciar1;
         var iniciar2;
-        var contMinutos;
+        let contMinutos;
         var contMilissegundos;
-        let contSegundos;
+        var contSegundos;
         const btnIniciar1 = document.getElementById("iniciar1");
         const btnIniciar2 = document.getElementById("iniciar2");
         const btnParar1 = document.getElementById("parar1");
@@ -104,15 +102,21 @@
         var segundos;
         var boxTimer = document.getElementById("boxTimer");
         var endTime_screen = document.getElementById("endTime-screen");
+        var tipoJogo;
 
         function bloquearInput(){
             document.getElementById("minutos").disabled = true
             document.getElementById("segundos").disabled = true
+
+            tipoJogo = "Xadres";
+        
         }
 
          function desbloquearInput(){
             document.getElementById("minutos").disabled = false
             document.getElementById("segundos").disabled = false
+
+            tipoJogo = "Cartas";
         }
 
         function atualizarDisplay(){
@@ -120,6 +124,7 @@
             var concatSegundos;
             var concatMilissegundos;
             var concatMinutos;
+           
 
             if(contSegundos < 10){
                  var concatSegundos = "0" + contSegundos;
@@ -134,34 +139,30 @@
             }
             
             if(contMinutos < 10){
+
                  var concatMinutos = "0" + contMinutos;
             }else{
                  var concatMinutos = contMinutos;
             }
                
 
-            document.getElementById("display").innerHTML = `<button onclick="abrir_BoxTimer()">
-            <i class="fa-solid fa-ellipsis-vertical"></i></button> 
+            document.getElementById("cronometro").innerHTML = `
 
-            <div id="detalhes">
-                <p>tempo selecionado: </p>
-
-                <p>tipo de jogo: </p>
-            </div>  
-              
-            <div id="cronometro">
                 <div id="displayMin">${concatMinutos}</div><p>:</p>
                 <div id="displaySeg">${concatSegundos}</div><p>:</p>
                 <div id="displayMil">${concatMilissegundos}</div>
-                </div>
-            </div>`
+                </div>`
 
              if(contMinutos == minutos && contSegundos == segundos){
-                contSegundos = 0;
-                contMinutos = 0;
-
+               
+                
                 setTimeout(() => {
-                   endTime_screen.style = "display: flex;"
+
+                    endTime_screen.style = "display: flex;"
+                    contMilissegundos = 0;
+                    contSegundos = 0;
+                    contMinutos = 0;
+
                 }, 1000);
                 
             }
@@ -170,8 +171,7 @@
 
         //ABRIR DEFINIÇÃO DE TIMER
         function abrir_BoxTimer(){
-            document.getElementById("display").innerHTML = `<button onclick="abrir_BoxTimer()">
-            <i class="fa-solid fa-ellipsis-vertical"></i></button>  <div id="displayMin">00</div><p>:</p>
+            document.getElementById("cronometro").innerHTML = ` <div id="displayMin">00</div><p>:</p>
             <div id="displaySeg">00</div><p>:</p>
             <div id="displayMil">00</div>
              </div>`
@@ -191,56 +191,103 @@
             segundos = document.getElementById("segundos").value
 
             if(minutos < 59 || segundos < 59 || minutos > 0 || segundos > 59){
-              
+
                 boxTimer.style = "display: none;"
             }else{
                 alert("Informe valores validos!")
             }
+
+            var tempoMin = document.getElementById("minutos").value;
+            var TempoSeg =  document.getElementById("segundos").value;
+            var detalhes = document.getElementById('detalhes')
+
+            if(tipoJogo == "Cartas"){
+                 detalhes.innerHTML = `<p>tempo selecionado: ${tempoMin} : ${TempoSeg}</p>
+                 
+                  <p>tipo de jogo: ${tipoJogo}</p>`
+            }
+             else  if(tipoJogo == "Xadres"){
+                 detalhes.innerHTML = `<p>tempo selecionado: 05:00</p>
+
+                <p>tipo de jogo: ${tipoJogo}</p>`
+            }
           
         }
 
-        // INÍCIO CONTAGEM JOGADOR 1
+        // INÍCIO CONTAGEM DO JOGADOR 1
 
+        var contador = 1;
         function iniciar_Contagem1(){
-
+            
             btnIniciar1.style = "display: none;"
             btnParar1.style = "display: block;"
             btnIniciar2.disabled = true; 
+            
+            
+            if(tipoJogo == "Xadres"){
+               
+                if(contador == 1 || contMinutos == minutos){
+                    contMilissegundos = 0;
+                    contSegundos = 0;
+                    contMinutos = 0;
+                }
 
-            contMilissegundos = 1;
-            contSegundos = 0;
-            contMinutos = 0;
+                minutos = 2;
+                segundos = 0;
 
+            }
+                else if(tipoJogo == "Cartas"){
+                    contMilissegundos = 0;
+                    contSegundos = 0;
+                    contMinutos = 0;
+                }
+        
             iniciar1 = setInterval(()=>{
                 contMilissegundos++
 
-                if(contMilissegundos == 59){
+                if(contMilissegundos == 60){
                     contMilissegundos = 0;
                     contar_Segundos1();
-                }
-               atualizarDisplay();
+            }
+            
+            contador++
+            atualizarDisplay();
             }, 16);
+
         }
 
         function contar_Segundos1(){
-
+            
+            contSegundos++
             setTimeout(()=>{
-                contSegundos++
 
                 if(segundos > 0 && segundos < 15 && contMinutos == minutos){
-                    if(contSegundos == segundos){
+                    
+                    if(contSegundos == segundos && contMinutos == minutos){
+
                         btnIniciar1.style = "display: block;"
                         btnParar1.style = "display: none;"
                         parar_Contagem(this.iniciar1);
                         btnIniciar2.disabled = false; 
                     }
-                }else{
-                    if(minutos > 0){
+                }else{ 
+                 
+                    if(minutos > 0){ 
+
                         if(contSegundos == 15){
-                            contar_Minutos1();
-                            contSegundos = "0";
-                            contMilissegundos = "0"
+                            if(contMinutos != minutos){
+
+                                if(contMinutos == minutos - 1){
+                                    contSegundos = -1;
+                                }else{
+                                    contSegundos = 0;
+                                }
+                                 
+                                 contMilissegundos = 0;
+                                contar_Minutos1();
+                            }
                         }
+
                     }
                     else{
                         if(contSegundos == segundos){
@@ -253,22 +300,22 @@
                          
                         }
                     }
-                
                 }
-                
+                 
             }, 0)
-
         }
 
         function contar_Minutos1(){
 
             setTimeout(()=>{
                 contMinutos++
-
                 if(contMinutos == minutos){
-                    if(segundos > 0 && segundos < 10){
-                        contar_Segundos1();
+                    if(segundos > 0 && segundos < 15){
+  
+                    contar_Segundos1();  
+                            
                     }else{
+                        
                         btnIniciar1.style = "display: block;"
                         btnParar1.style = "display: none;"
 
@@ -278,7 +325,7 @@
                     
                 }
             }, 0)
-
+              
         }
 
         btnParar1.addEventListener("click", ()=>{
@@ -293,48 +340,79 @@
 
 
         // INÍCIO CONTAGEM JOGADOR 2
-
         function iniciar_Contagem2(){
 
+          
             btnIniciar2.style = "display: none;"
             btnParar2.style = "display: block;"
             btnIniciar1.disabled = true; 
+            
+            
+            if(tipoJogo == "Xadres"){
+               
+                if(contador == 1 || contMinutos == minutos){
+                    contMilissegundos = 0;
+                    contSegundos = 0;
+                    contMinutos = 0;
+                }
 
-            contMilissegundos = 1;
-            contSegundos = 0;
-            contMinutos = 0;
+                minutos = 2;
+                segundos = 0;
 
+            }
+                else if(tipoJogo == "Cartas"){
+                    contMilissegundos = 0;
+                    contSegundos = 0;
+                    contMinutos = 0;
+                }
+        
             iniciar2 = setInterval(()=>{
                 contMilissegundos++
 
-                if(contMilissegundos == 59){
+                if(contMilissegundos == 60){
                     contMilissegundos = 0;
                     contar_Segundos2();
-                }
-               atualizarDisplay();
+            }
+            
+            contador++
+            atualizarDisplay();
             }, 16);
+
         }
 
 
         function contar_Segundos2(){
 
+            contSegundos++
             setTimeout(()=>{
-                contSegundos++
 
-                if(segundos > 0 && segundos < 10 && contMinutos == minutos){
-                    if(contSegundos == segundos){
+                if(segundos > 0 && segundos < 15 && contMinutos == minutos){
+                    
+                    if(contSegundos == segundos && contMinutos == minutos){
+
                         btnIniciar2.style = "display: block;"
                         btnParar2.style = "display: none;"
                         parar_Contagem(this.iniciar2);
                         btnIniciar1.disabled = false; 
                     }
-                }else{
-                    if(minutos > 0){
-                        if(contSegundos == 10){
-                            contar_Minutos2();
-                            contSegundos = "0";
-                            contMilissegundos = "0"
+                }else{ 
+                 
+                    if(minutos > 0){ 
+
+                        if(contSegundos == 15){
+                            if(contMinutos != minutos){
+
+                                if(contMinutos == minutos - 1){
+                                    contSegundos = -1;
+                                }else{
+                                    contSegundos = 0;
+                                }
+                                 
+                                 contMilissegundos = 0;
+                                contar_Minutos2();
+                            }
                         }
+
                     }
                     else{
                         if(contSegundos == segundos){
@@ -347,22 +425,23 @@
                          
                         }
                     }
-                
                 }
-                
+                 
             }, 0)
-
         }
+
 
          function contar_Minutos2(){
 
-            setTimeout(()=>{
+             setTimeout(()=>{
                 contMinutos++
-
                 if(contMinutos == minutos){
-                    if(segundos > 0 && segundos < 10){
-                        contar_Segundos2();
+                    if(segundos > 0 && segundos < 15){
+  
+                    contar_Segundos2();  
+                            
                     }else{
+                        
                         btnIniciar2.style = "display: block;"
                         btnParar2.style = "display: none;"
 
@@ -372,6 +451,7 @@
                     
                 }
             }, 0)
+              
 
         }
 
@@ -392,7 +472,8 @@
 
             clearInterval(intervalo);
 
-            atualizarDisplay();
+             atualizarDisplay();
+
         }
 
         function voltar(){

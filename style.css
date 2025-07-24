@@ -59,7 +59,7 @@ div button i{
     width: 100%;
     position: absolute;
     background-color: rgba(6, 80, 49, 0.89);
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1;
