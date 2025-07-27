@@ -193,7 +193,7 @@
                 if(tipoJogo == "Xadres"){
                         boxTimer.style = "display: none;"
                 }else{
-                    alert("Por favor infome uma tempo de execução!")
+                    alert("Por favor infome um tempo de execução!")
                 }
             }
                 else if(minutos > 59 || segundos > 59 || minutos < 0 || segundos < 0){
@@ -239,7 +239,7 @@
                     contMinutos = 0;
                 }
 
-                minutos = 2;
+                minutos = 5;
                 segundos = 0;
 
             }
@@ -268,7 +268,7 @@
             contSegundos++
             setTimeout(()=>{
 
-                if(segundos > 0 && segundos < 15 && contMinutos == minutos){
+                if(segundos > 0 && segundos < 60 && contMinutos == minutos){
                     
                     if(contSegundos == segundos && contMinutos == minutos){
 
@@ -281,7 +281,7 @@
                  
                     if(minutos > 0){ 
 
-                        if(contSegundos == 15){
+                        if(contSegundos == 60){
                             if(contMinutos != minutos){
 
                                 if(contMinutos == minutos - 1 && tipoJogo == "Cartas"){
@@ -317,7 +317,7 @@
             setTimeout(()=>{
                 contMinutos++
                 if(contMinutos == minutos){
-                    if(segundos > 0 && segundos < 15){
+                    if(segundos > 0 && segundos < 60){
   
                     contar_Segundos1();  
                             
@@ -393,7 +393,7 @@
             contSegundos++
             setTimeout(()=>{
 
-                if(segundos > 0 && segundos < 15 && contMinutos == minutos){
+                if(segundos > 0 && segundos < 60 && contMinutos == minutos){
                     
                     if(contSegundos == segundos && contMinutos == minutos){
 
@@ -406,7 +406,7 @@
                  
                     if(minutos > 0){ 
 
-                        if(contSegundos == 15){
+                        if(contSegundos == 60){
                             if(contMinutos != minutos){
 
                                 if(contMinutos == minutos - 1 && tipoJogo == "Cartas"){
@@ -443,7 +443,7 @@
              setTimeout(()=>{
                 contMinutos++
                 if(contMinutos == minutos){
-                    if(segundos > 0 && segundos < 15){
+                    if(segundos > 0 && segundos < 60){
   
                     contar_Segundos2();  
                             
