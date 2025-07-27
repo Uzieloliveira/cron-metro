@@ -107,15 +107,13 @@
         function bloquearInput(){
             document.getElementById("minutos").disabled = true
             document.getElementById("segundos").disabled = true
-
             tipoJogo = "Xadres";
         
         }
 
-         function desbloquearInput(){
+        function desbloquearInput(){
             document.getElementById("minutos").disabled = false
             document.getElementById("segundos").disabled = false
-
             tipoJogo = "Cartas";
         }
 
@@ -124,7 +122,6 @@
             var concatSegundos;
             var concatMilissegundos;
             var concatMinutos;
-           
 
             if(contSegundos < 10){
                  var concatSegundos = "0" + contSegundos;
@@ -155,7 +152,9 @@
 
              if(contMinutos == minutos && contSegundos == segundos){
                
-                
+                const audio = new Audio();
+                audio.src = "./audio/sirene.mp3"
+                audio.play();""
                 setTimeout(() => {
 
                     endTime_screen.style = "display: flex;"
@@ -190,12 +189,19 @@
             minutos = document.getElementById("minutos").value
             segundos = document.getElementById("segundos").value
 
-            if(minutos < 59 || segundos < 59 || minutos > 0 || segundos > 59){
-
-                boxTimer.style = "display: none;"
-            }else{
-                alert("Informe valores validos!")
+            if(minutos.trim() === "" || segundos.trim() === ""){
+                if(tipoJogo == "Xadres"){
+                        boxTimer.style = "display: none;"
+                }else{
+                    alert("Por favor infome uma tempo de execução!")
+                }
             }
+                else if(minutos > 59 || segundos > 59 || minutos < 0 || segundos < 0){
+                    alert("Informe valores válidos!")  
+                }
+                    else{
+                        boxTimer.style = "display: none;"
+                    }
 
             var tempoMin = document.getElementById("minutos").value;
             var TempoSeg =  document.getElementById("segundos").value;
@@ -219,6 +225,7 @@
         var contador = 1;
         function iniciar_Contagem1(){
             
+
             btnIniciar1.style = "display: none;"
             btnParar1.style = "display: block;"
             btnIniciar2.disabled = true; 
@@ -277,7 +284,7 @@
                         if(contSegundos == 15){
                             if(contMinutos != minutos){
 
-                                if(contMinutos == minutos - 1){
+                                if(contMinutos == minutos - 1 && tipoJogo == "Cartas"){
                                     contSegundos = -1;
                                 }else{
                                     contSegundos = 0;
@@ -356,7 +363,7 @@
                     contMinutos = 0;
                 }
 
-                minutos = 2;
+                minutos = 5;
                 segundos = 0;
 
             }
@@ -402,7 +409,7 @@
                         if(contSegundos == 15){
                             if(contMinutos != minutos){
 
-                                if(contMinutos == minutos - 1){
+                                if(contMinutos == minutos - 1 && tipoJogo == "Cartas"){
                                     contSegundos = -1;
                                 }else{
                                     contSegundos = 0;
